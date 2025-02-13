@@ -1,7 +1,9 @@
-'use client'
+'use client';
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Card from "./Card";
+import fetchPokemon from "@/services/pokemonService";
+
 
 export default function CardList() {
     const [pokemonList, setPokemonList] = useState([]);
@@ -9,20 +11,26 @@ export default function CardList() {
     const [loading, setLoading] = useState(false);
     
     useEffect(() => {
-        fetchPokemon(nextUrl);
+        loadPokemon(nextUrl);
     }, []);
 
-    const fetchPokemon = async (url) => {
+    const pokemonCache = useRef([]);
+
+    const loadPokemon = async (url) => {
         if (loading) return;
         setLoading(true);
-        try {
-            const res = await fetch(url);
-            const data = await res.json();
-            setPokemonList((prev) => [...prev, ...data.results]);
-                       setNextUrl(data.next);
-        } catch (error) {
-            console.error("Error to Search Pokemon!", error);
+
+        const data = await fetchPokemon(url);
+        if (data) {
+            const uniquePokemon = data.results.filter(pokemon => 
+                !pokemonCache.current.some(cached => cached.name === pokemon.name)
+            );
+
+            pokemonCache.current = [...pokemonCache.current, ...uniquePokemon];
+            setPokemonList(pokemonCache.current);
+            setNextUrl(data.next);
         }
+
         setLoading(false);
     };
 
@@ -35,14 +43,12 @@ export default function CardList() {
             </div>
             {nextUrl && (
                 <button 
-                onClick={() => fetchPokemon(nextUrl)} 
+                onClick={() => loadPokemon(nextUrl)} 
                 className="flex justify-between text-center mt-6 mx-auto px-4 py-2 bg-red-800/75 text-white rounded-full shadow transition duration-500 hover:bg-red-800/90 hover:scale-110"
                 >
                     {loading
-                        ?
-                        <img src="/pokeball.svg" className="w-10 animate-spin" alt="Loading list"></img>
-                        :
-                        <img src="/pokeball.svg" className="w-10" alt="Loading list"></img>
+                        ? <img src="/pokeball.svg" className="w-10 animate-spin" alt="Loading"></img>
+                        : <img src="/pokeball.svg" className="w-10" alt="Loading list"></img>
                     }
                 </button>
             )}
