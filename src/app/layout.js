@@ -1,4 +1,6 @@
+import NavBar from "@/components/NavBar";
 import "./globals.css";
+import Footer from "@/components/Footer";
 
 export const metadata = {
   title: "Pokedex",
@@ -14,7 +16,9 @@ export default function RootLayout({ children }) {
       <body
         className={`antialiased`}
       >
+        <NavBar />
         {children}
+        <Footer />  
       </body>
     </html>
   );
