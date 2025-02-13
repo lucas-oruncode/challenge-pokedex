@@ -1,7 +1,7 @@
 import Footer from "./Footer";
 import NavBar from "./NavBar";
 
-export default function Layout() {
+export default function HomeLayout() {
     return (
         <div>
            <NavBar />
