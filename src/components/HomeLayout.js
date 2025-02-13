@@ -4,7 +4,7 @@ import Title from "./Title";
 
 export default function HomeLayout() {
     return (
-        <div>
+        <div className="min-h-screen w-full bg-[url(/bg-img.jpg)] bg-cover bg-center bg-fixed flex flex-col items-center justify-between">
            <NavBar />
            <Title />
            <Footer />
