@@ -3,36 +3,35 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
+import { fetchPokemonDetail } from "@/services/pokemonService";
+import NavBar from "@/components/NavBar";
 
 export default function PokemonDetail() {
     const { id } = useParams();
     const [pokemon, setPokemon] = useState(null);
 
     useEffect(() => {
-        if (id) {
-            fetchPokemonDetail(id);
-        }
+        const getPokemon = async () => {
+            if (id) {
+                const data = await fetchPokemonDetail(id);
+                setPokemon(data);
+            }
+        };
+        getPokemon();
     }, [id]);
 
-    const fetchPokemonDetail = async (pokemonId) => {
-        try {
-            const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`);
-            if (!res.ok) throw new Error("Sorry, Pokemon not found");
-            const data = await res.json();
-            setPokemon(data);
-        } catch (error) {
-            console.error("Error on serch Pokemon detail", error);
-        }
-    };
-
-    if (!pokemon)
-        return
+    if (!pokemon) {
+        return (
             <div className="min-h-screen flex items-center justify-center bg-black">
-                <p className="text-white text-lg">Loading...</p>
+                <img src="/pokeball.svg" className="w-20 animate-spin" alt="Loading"></img>
             </div>
+        );
+    }
 
     return (
 
+        <div>
+        <NavBar />
         <div className="min-h-screen w-full bg-[url(/bg-img.jpg)] bg-cover bg-center bg-fixed flex flex-col items-center justify-center">
             <div className="bg-black/90 text-white py-4 min-w-[30%] border rounded-lg flex flex-col items-center">
                 <h1 className="text-3xl border rounded-full p-4 font-bold capitalize mt-4">{pokemon.name}</h1>
@@ -60,6 +59,7 @@ export default function PokemonDetail() {
             </div>
 
             <Link href="/" className="mt-6 block text-white hover:underline">Back</Link>
+        </div>
         </div>
     );
 }
