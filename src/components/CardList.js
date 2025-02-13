@@ -21,7 +21,7 @@ export default function CardList() {
             setPokemonList((prev) => [...prev, ...data.results]);
                        setNextUrl(data.next);
         } catch (error) {
-            console.error("Erro ao buscar Pokémon", error);
+            console.error("Error to Search Pokemon!", error);
         }
         setLoading(false);
     };
