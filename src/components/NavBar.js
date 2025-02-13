@@ -1,11 +1,15 @@
+import Link from "next/link";
+
 export default function NavBar() {
     return (
         <div className="bg-red-800 min-w-[100%] p-3 flex justify-center">
+            <Link href="/">
                 <img 
                 className="max-w-250 max-h-10" 
                 src="/banner.png" 
                 alt="Home" 
                 />
+            </Link>
         </div>
     );
 }
