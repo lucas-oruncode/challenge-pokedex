@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Card from "./Card";
-import fetchPokemon from "@/services/pokemonService";
+import { fetchPokemonData } from "@/services/pokemonService";
 
 
 export default function CardList() {
@@ -20,7 +20,7 @@ export default function CardList() {
         if (loading) return;
         setLoading(true);
 
-        const data = await fetchPokemon(url);
+        const data = await fetchPokemonData(url);
         if (data) {
             const uniquePokemon = data.results.filter(pokemon => 
                 !pokemonCache.current.some(cached => cached.name === pokemon.name)
