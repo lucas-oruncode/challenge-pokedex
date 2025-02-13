@@ -8,3 +8,15 @@ export const fetchPokemonData = async (url) => {
         return null;
     }
 };
+
+
+export const fetchPokemonDetail = async (pokemonId) => {
+    try {
+        const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`);
+        if (!res.ok) throw new Error("Sorry, Pokemon not found");
+        return await res.json();
+    } catch (error) {
+        console.error("Error fetching Pokémon details!", error);
+        return null;
+    }
+};
