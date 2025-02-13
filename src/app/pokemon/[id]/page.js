@@ -25,11 +25,11 @@ export default function PokemonDetail() {
         }
     };
 
-    if (!pokemon) 
-        return 
-            <div className="bg-black">
-             <p className="text-center mt-6">Loading...</p>;
-            </div> 
+    if (!pokemon)
+        return
+            <div className="min-h-screen flex items-center justify-center bg-black">
+                <p className="text-white text-lg">Loading...</p>
+            </div>
 
     return (
 
