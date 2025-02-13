@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { fetchPokemonDetail } from "@/services/pokemonService";
-import NavBar from "@/components/NavBar";
 
 export default function PokemonDetail() {
     const { id } = useParams();
@@ -30,8 +29,6 @@ export default function PokemonDetail() {
 
     return (
 
-        <div>
-        <NavBar />
         <div className="min-h-screen w-full bg-[url(/bg-img.jpg)] bg-cover bg-center bg-fixed flex flex-col items-center justify-center">
             <div className="bg-black/90 text-white py-4 min-w-[30%] border rounded-lg flex flex-col items-center">
                 <h1 className="text-3xl border rounded-full p-4 font-bold capitalize mt-4">{pokemon.name}</h1>
@@ -59,7 +56,6 @@ export default function PokemonDetail() {
             </div>
 
             <Link href="/" className="mt-6 block text-white hover:underline">Back</Link>
-        </div>
         </div>
     );
 }
