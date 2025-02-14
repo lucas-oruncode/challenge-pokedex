@@ -28,34 +28,54 @@ export default function PokemonDetail() {
     }
 
     return (
+        <div className="min-h-screen w-full bg-[url(/bg-img.jpg)] bg-cover bg-center bg-fixed flex flex-col items-center justify-center p-6">
+            <div className="bg-black/70 backdrop-blur-lg text-white border p-6 rounded-2xl shadow-lg min-w-[90%] md:min-w-[60%] lg:min-w-[40%] flex flex-col items-center">
+                
+                <h1 className="text-4xl font-bold capitalize mt-4 border-b-2 border-white pb-2">
+                    {pokemon.name}
+                </h1>
+                
+                <div className="relative mt-6">
+                    <img 
+                        src={pokemon.sprites?.other["official-artwork"].front_default}                        
+                        alt={pokemon.name} 
+                        className="w-40 drop-shadow-lg "
+                    />
+                </div>
 
-        <div className="min-h-screen w-full bg-[url(/bg-img.jpg)] bg-cover bg-center bg-fixed flex flex-col items-center justify-center">
-            <div className="bg-black/90 text-white py-4 min-w-[30%] border rounded-lg flex flex-col items-center">
-                <h1 className="text-3xl border rounded-full p-4 font-bold capitalize mt-4">{pokemon.name}</h1>
-                <img src={pokemon.sprites?.front_default} alt={pokemon.name} className="w-40" />
-                <div className="flex flex-co justify-center mb-3">
+                <div className="flex flex-wrap justify-center gap-3 mt-4">
                     {pokemon.types?.map((typeInfo, index) => (
-                        <span key={index} className="border text-white text-lg p-2 mx-3  rounded-2xl capitalize">
+                        <span key={index} className="bg-gray-600/70 px-4 py-2 rounded-full text-sm capitalize shadow-md">
                             {typeInfo.type.name}
                         </span>
                     ))}
                 </div>
-                <div className="flex justify-between gap-5 m-3">
-                    <p className="text-md">Height: {pokemon.height}</p>
-                    <p className="md">Weight: {pokemon.weight}</p>
+
+                <div className="flex flex-col justify-center items-center w-[40%] mt-4 gap-2 text-md">
+                    <p className="px-4 py-2 bg-white/10 rounded-lg shadow-md">
+                        <strong>Height:</strong> {pokemon.height}
+                    </p>
+                    <p className="px-4 py-2 bg-white/10 rounded-lg shadow-md">
+                        <strong>Weight:</strong> {pokemon.weight}
+                    </p>
                 </div>
 
-                <div className="m-4 flex flex-col gap-3">
-                    <h2 className="text-xl font-semibold">Skills</h2>
-                    <ul className="list-disc list-inside">
+                {/* Habilidades */}
+                <div className="mt-6 text-center w-full">
+                    <h2 className="text-xl font-semibold mb-3">Abilities</h2>
+                    <ul className="grid grid-cols-2 gap-3 text-sm">
                         {pokemon.abilities?.map((abilityInfo, index) => (
-                            <li key={index} className="capitalize">{abilityInfo.ability.name}</li>
+                            <li key={index} className="capitalize bg-white/10 px-3 py-2 rounded-md shadow-md">
+                                {abilityInfo.ability.name}
+                            </li>
                         ))}
                     </ul>
                 </div>
             </div>
 
-            <Link href="/" className="mt-6 block text-white hover:underline">Back</Link>
+            <Link href="/" className="mt-6 px-6 py-3 bg-red-700/80 hover:bg-red-700 text-white font-semibold rounded-full shadow-md transition-transform hover:scale-105">
+                ← Back
+            </Link>
         </div>
     );
 }
