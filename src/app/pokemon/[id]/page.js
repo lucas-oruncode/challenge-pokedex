@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { fetchPokemonDetail } from "@/services/pokemonService";
+import typeColors from "@/utils/typeColors";
 
 export default function PokemonDetail() {
     const { id } = useParams();
@@ -30,22 +31,26 @@ export default function PokemonDetail() {
     return (
         <div className="min-h-screen w-full bg-[url(/bg-img.jpg)] bg-cover bg-center bg-fixed flex flex-col items-center justify-center p-6">
             <div className="bg-black/70 backdrop-blur-lg text-white border p-6 rounded-2xl shadow-lg min-w-[90%] md:min-w-[60%] lg:min-w-[40%] flex flex-col items-center">
-                
+
                 <h1 className="text-4xl font-bold capitalize mt-4 border-b-2 border-white pb-2">
                     {pokemon.name}
                 </h1>
-                
+
                 <div className="relative mt-6">
-                    <img 
-                        src={pokemon.sprites?.other["official-artwork"].front_default}                        
-                        alt={pokemon.name} 
+                    <img
+                        src={pokemon.sprites?.other["official-artwork"].front_default}
+                        alt={pokemon.name}
                         className="w-40 drop-shadow-lg "
                     />
                 </div>
 
                 <div className="flex flex-wrap justify-center gap-3 mt-4">
                     {pokemon.types?.map((typeInfo, index) => (
-                        <span key={index} className="bg-gray-600/70 px-4 py-2 rounded-full text-sm capitalize shadow-md">
+                        <span
+                            key={index}
+                            className="px-4 py-2 rounded-full text-sm capitalize shadow-md text-white font-semibold"
+                            style={{ backgroundColor: typeColors[typeInfo.type.name] || "#777" }}
+                        >
                             {typeInfo.type.name}
                         </span>
                     ))}
