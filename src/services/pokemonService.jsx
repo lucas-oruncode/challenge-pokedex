@@ -1,6 +1,8 @@
-export const fetchPokemonData = async (url) => {
+const url = 'https://pokeapi.co/api/v2/pokemon'
+
+export const fetchPokemonData = async (limit) => {
     try {
-        const res = await fetch(url);
+        const res = await fetch(`${url}?limit=${limit}`);
         const data = await res.json();
         return data;
     } catch (error) {
@@ -12,8 +14,10 @@ export const fetchPokemonData = async (url) => {
 
 export const fetchPokemonDetail = async (pokemonId) => {
     try {
-        const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`);
-        if (!res.ok) throw new Error("Sorry, Pokemon not found");
+        const res = await fetch(`${url}/${pokemonId}`);
+        if (res.status === 404) {
+            return null;
+        }
         return await res.json();
     } catch (error) {
         console.error("Error fetching Pokémon details!", error);

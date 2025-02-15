@@ -6,32 +6,34 @@ import { fetchPokemonData } from "@/services/pokemonService";
 
 
 export default function CardList() {
-    const [pokemonList, setPokemonList] = useState([]);
-    const [nextUrl, setNextUrl] = useState("https://pokeapi.co/api/v2/pokemon?limit=30");
+    const [pokemonList, setPokemonList] = useState([]); 
     const [loading, setLoading] = useState(false);
-    
-    useEffect(() => {
-        loadPokemon(nextUrl);
-    }, []);
-
+    const [limit, setLimit] = useState(30);
     const pokemonCache = useRef([]);
+    useEffect(() => {
+        loadPokemon();
+    }, [limit]);
 
-    const loadPokemon = async (url) => {
+    const loadPokemon = async () => {
         if (loading) return;
         setLoading(true);
 
-        const data = await fetchPokemonData(url);
+        const data = await fetchPokemonData(limit);
         if (data) {
-            const uniquePokemon = data.results.filter(pokemon => 
+            const uniquePokemon = data.results.filter(pokemon =>
                 !pokemonCache.current.some(cached => cached.name === pokemon.name)
             );
 
             pokemonCache.current = [...pokemonCache.current, ...uniquePokemon];
+            console.log(pokemonCache.current)
             setPokemonList(pokemonCache.current);
-            setNextUrl(data.next);
         }
 
         setLoading(false);
+    };
+
+    const handleLoadMore = () => {
+        setLimit(prevLimit => prevLimit + 30);
     };
 
     return (
@@ -41,14 +43,16 @@ export default function CardList() {
                     <Card key={index} pokemon={pokemon} index={index} />
                 ))}
             </div>
-            {nextUrl && (
-                <button 
-                onClick={() => loadPokemon(nextUrl)} 
-                className="flex justify-between text-center mt-6 mx-auto px-4 py-2 bg-red-800/75 text-white rounded-full shadow transition duration-500 hover:bg-red-800/90 hover:scale-110"
+
+            {pokemonList.length > 0 && (
+                <button
+                    onClick={handleLoadMore}
+                    className="flex justify-between text-center mt-6 mx-auto px-4 py-2 bg-red-800/75 text-white rounded-full shadow transition duration-500 hover:bg-red-800/90 hover:scale-110"
+                    disabled={loading}
                 >
                     {loading
-                        ? <img src="/pokeball.svg" className="w-10 animate-spin" alt="Loading"></img>
-                        : <img src="/pokeball.svg" className="w-10" alt="Loading list"></img>
+                        ? <img src="/pokeball.svg" className="w-10 animate-spin" alt="Loading" />
+                        : <img src="/pokeball.svg" className="w-10" alt="Load more" />
                     }
                 </button>
             )}
