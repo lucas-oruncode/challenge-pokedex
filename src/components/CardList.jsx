@@ -25,7 +25,6 @@ export default function CardList() {
             );
 
             pokemonCache.current = [...pokemonCache.current, ...uniquePokemon];
-            console.log(pokemonCache.current)
             setPokemonList(pokemonCache.current);
         }
 
