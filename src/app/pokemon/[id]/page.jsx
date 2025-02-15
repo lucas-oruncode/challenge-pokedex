@@ -65,7 +65,6 @@ export default function PokemonDetail() {
                     </p>
                 </div>
 
-                {/* Habilidades */}
                 <div className="mt-6 text-center w-full">
                     <h2 className="text-xl font-semibold mb-3">Abilities</h2>
                     <ul className="grid grid-cols-2 gap-3 text-sm">
