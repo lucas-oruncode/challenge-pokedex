@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from "react";
 import Card from "./Card";
 import { fetchPokemonData } from "@/services/pokemonService";
-import Search from "./Search";
 
 
 export default function CardList() {
@@ -37,9 +36,6 @@ export default function CardList() {
 
     return (
         <div className="p-6">
-
-            <Search />
-
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
                 {pokemonList.map((pokemon, index) => (
                     <Card key={index} pokemon={pokemon} index={index} />

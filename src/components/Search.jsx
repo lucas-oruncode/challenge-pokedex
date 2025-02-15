@@ -14,11 +14,11 @@ export default function Search() {
     };
 
     return (
-        <div className="mb-4 flex justify-center">
+        <div className=" flex justify-center">
             <input
                 type="text"
-                placeholder="Search Pokémon and Press Enter"
-                className="bg-white w-80 min-w-50 mb-10 p-2 mt-3 text-center rounded-full drop-shadow-xl"
+                placeholder="Search Pokemon..."
+                className="bg-white max-h-[40px] min-w-[30px] p-2 mt-2 text-center rounded-full drop-shadow-xl"
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
                 onKeyDown={handleKeyDown}
