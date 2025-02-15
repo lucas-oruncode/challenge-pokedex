@@ -10,7 +10,7 @@ This project was developed for the challenge by Beyonders. It is an interactive 
 
 ## Features
 
-- Pokémon listing with pagination and infinite scroll
+- Pokémon listing with pagination.
 - Detailed display of each Pokémon, including:
   - Name
   - Types
