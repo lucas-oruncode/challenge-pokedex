@@ -7,18 +7,18 @@ import { fetchPokemonDetail } from "@/services/pokemonService";
 import typeColors from "@/utils/typeColors";
 
 export default function PokemonDetail() {
-    const { id } = useParams();
+    const { name } = useParams();
     const [pokemon, setPokemon] = useState(null);
 
     useEffect(() => {
         const getPokemon = async () => {
-            if (id) {
-                const data = await fetchPokemonDetail(id);
+            if (name) {
+                const data = await fetchPokemonDetail(name);
                 setPokemon(data);
             }
         };
         getPokemon();
-    }, [id]);
+    }, [name]);
 
     if (!pokemon) {
         return (
