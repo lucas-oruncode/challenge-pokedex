@@ -17,7 +17,7 @@ export default function Search() {
         <div className=" flex justify-center">
             <input
                 type="text"
-                placeholder="Search Pokemon..."
+                placeholder="PokeSearch"
                 className="bg-white ml-12 w-[100px] h-[25px] md:min-h-[35px] md:min-w-[200px] p-2 mt-2 text-center rounded-full drop-shadow-xl"
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
