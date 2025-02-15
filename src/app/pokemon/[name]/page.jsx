@@ -2,28 +2,50 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import Link from "next/link";
 import { fetchPokemonDetail } from "@/services/pokemonService";
 import typeColors from "@/utils/typeColors";
+import DetailError from "@/components/PokemonDetailError";
+import BackButton from "@/components/BackButton";
 
 export default function PokemonDetail() {
     const { name } = useParams();
     const [pokemon, setPokemon] = useState(null);
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
+    
 
     useEffect(() => {
         const getPokemon = async () => {
-            if (name) {
-                const data = await fetchPokemonDetail(name);
-                setPokemon(data);
+            try {
+                if (name) {
+                    const data = await fetchPokemonDetail(name);
+                    if (!data) {
+                        throw new Error("Pokemon not found!");
+                    }
+                    setPokemon(data);
+                }
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
             }
         };
+
         getPokemon();
     }, [name]);
 
-    if (!pokemon) {
+    if (loading) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-black">
-                <img src="/pokeball.svg" className="w-20 animate-spin" alt="Loading"></img>
+                <img src="/pokeball.svg" className="w-20 animate-spin" alt="Loading" />
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="min-h-screen flex flex-col items-center justify-center bg-black text-white text-center p-6">
+                <DetailError />    
             </div>
         );
     }
@@ -76,10 +98,7 @@ export default function PokemonDetail() {
                     </ul>
                 </div>
             </div>
-
-            <Link href="/" className="mt-6 px-6 py-3 bg-red-700/80 hover:bg-red-700 text-white font-semibold rounded-full shadow-md transition-transform hover:scale-105">
-                ← Back
-            </Link>
+           <BackButton pathToReturn="/" />
         </div>
     );
 }
