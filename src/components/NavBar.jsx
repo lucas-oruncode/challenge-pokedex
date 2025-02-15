@@ -6,7 +6,7 @@ export default function NavBar() {
         <div className="bg-red-800 min-w-[100%] p-4 flex justify-between">            
             <Link href="/">
                 <img 
-                className="max-w-250 max-h-[60px] mx-5" 
+                className="h-[35px] md:min-w-[300px] md:min-h-[40px] mx-5" 
                 src="/banner.png" 
                 alt="Home" 
                 />
